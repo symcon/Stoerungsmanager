@@ -6,7 +6,10 @@
 			"Quit Message, disappear if resolved": "Quittier Meldung, verschwindet, wenn die Störung behoben wurde",
 			"Quit Message to disappear": "Quittiere Meldung",
 			"Message automatic disappear": "Meldung verschwindet automatisch",
-			"handle message": "Umgang mit Nachrichten"
+			"handle message": "Umgang mit Nachrichten",
+			"Need for Action": "Aktion erforderlich",
+			"Work in progress": "In Bearbeitung",
+			"All right": "Alles in Ordnung"
 		}
 	}
 }
