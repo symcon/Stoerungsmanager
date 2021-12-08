@@ -1,0 +1,14 @@
+{
+    "id": "{F49AB6E6-C766-5E74-8079-3BAEB5CB4670}",
+    "name": "Stoerungsanzeige",
+    "type": 3,
+    "vendor": "",
+    "aliases": [
+        "Störungsanzeige"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "STA",
+    "url": "https://github.com/symcon/Stoerungsanzeige"
+}

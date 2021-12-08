@@ -1,0 +1,12 @@
+{
+	"translations": {
+		"de": {
+			"Variables": "Variablen",
+			"Variable": "Variable",
+			"Quit Message, disappear if resolved": "Quittier Meldung, verschwindet, wenn die Störung behoben wurde",
+			"Quit Message to disappear": "Quittiere Meldung",
+			"Message automatic disappear": "Meldung verschwindet automatisch",
+			"handle message": "Umgang mit Nachrichten"
+		}
+	}
+}

@@ -1,0 +1,47 @@
+{
+  "elements": [
+    {
+      "type": "List",
+      "name": "VariableList",
+      "caption": "Variables",
+      "add": true,
+      "delete": true,
+      "columns": [
+        {
+          "caption": "Variable",
+          "name": "VariableID",
+          "width": "150px",
+          "add": 0,
+          "edit": 
+            {
+              "type": "SelectVariable"
+            }
+        },
+        {
+          "caption": "handle message",
+          "name": "Solution",
+          "width": "auto",
+          "add": 0,
+          "edit": 
+            {
+              "type": "Select",
+              "options":[
+                {
+                  "caption": "Message automatic disappear",
+                  "value": 0
+                },
+                {
+                  "caption": "Quit Message to disappear",
+                  "value": 1
+                },
+                {
+                  "caption": "Quit Message, disappear if resolved",
+                  "value":2
+                }                
+              ]
+            }
+        }
+      ]
+    }
+  ]
+}
