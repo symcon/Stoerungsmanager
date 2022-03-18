@@ -1,4 +1,4 @@
-# VerbraucherAlarm
+# Stoerungsanzeige
 Das Modul dient dazu aktive Variablen im Webfront anzuzeigen und je nach Einstellung nach Eingabe oder Deaktivierung auszublenden. 
 Wenn die Einstellung 'Meldung verschwindet automatisch' ausgewählt wurde, wird ein Link sichtbar, sobald die überwachte Variable aktiv ist. Dieser verschwindet sobald die überwachte Variabel deaktiviert ist.
 Wenn die Einstellung 'Quittiere Meldung' ausgewählt wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf über 0 geändert wurde. 
