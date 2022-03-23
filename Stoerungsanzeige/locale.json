@@ -3,13 +3,13 @@
 		"de": {
 			"Variables": "Variablen",
 			"Variable": "Variable",
-			"Quit Message, disappear if resolved": "Quittier Meldung, verschwindet, wenn die Störung behoben wurde",
-			"Quit Message to disappear": "Quittiere Meldung",
-			"Message automatic disappear": "Meldung verschwindet automatisch",
-			"handle message": "Umgang mit Nachrichten",
+			"Confirmation": "Bestätigung",
+			"Automatic hide": "Automatische Ausblendung",
+			"Notification (optional)": "Benachrichtigung (optional)",
 			"Need for Action": "Aktion erforderlich",
 			"Work in progress": "In Bearbeitung",
-			"All right": "Alles in Ordnung"
+			"All right": "Alles in Ordnung",
+			"Undefine, one of the checkboxes must be select": "Nicht definiert, eine der Checkboxen muss ausgewählt sein"
 		}
 	}
 }

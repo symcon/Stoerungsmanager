@@ -10,38 +10,50 @@
         {
           "caption": "Variable",
           "name": "VariableID",
-          "width": "150px",
+          "width": "200px",
           "add": 0,
-          "edit": 
-            {
-              "type": "SelectVariable"
-            }
+          "edit": {
+            "type": "SelectVariable"
+          }
         },
         {
-          "caption": "handle message",
-          "name": "Solution",
+          "caption": "Confirmation",
+          "width": "110px",
+          "add": true,
+          "name": "Confirmation",
+          "edit": {
+            "type": "CheckBox"
+          }
+        },
+        {
+          "caption": "Automatic hide",
+          "width": "120px",
+          "add": true,
+          "name": "Hide",
+          "edit": {
+            "type": "CheckBox"
+          }
+        },
+        {
+          "caption": "Notification (optional)",
           "width": "auto",
           "add": 0,
-          "edit": 
-            {
-              "type": "Select",
-              "options":[
-                {
-                  "caption": "Message automatic disappear",
-                  "value": 0
-                },
-                {
-                  "caption": "Quit Message to disappear",
-                  "value": 1
-                },
-                {
-                  "caption": "Quit Message, disappear if resolved",
-                  "value":2
-                }                
-              ]
-            }
+          "name": "Notification",
+          "edit": {
+            "type": "SelectInstance",
+            "validModules": [
+              "{57677DB8-4C2A-4673-A267-B083A0755CDE}"
+            ]
+          }
         }
       ]
+    }
+  ],
+  "status": [
+    {
+      "code": 200,
+      "icon": "error",
+      "caption": "Undefine, one of the checkboxes must be select"
     }
   ]
 }

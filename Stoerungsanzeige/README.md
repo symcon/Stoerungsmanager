@@ -1,8 +1,8 @@
 # Stoerungsanzeige
 Das Modul dient dazu aktive Variablen im Webfront anzuzeigen und je nach Einstellung nach Eingabe oder Deaktivierung auszublenden. 
-Wenn die Einstellung 'Meldung verschwindet automatisch' ausgewählt wurde, wird ein Link sichtbar, sobald die überwachte Variable aktiv ist. Dieser verschwindet sobald die überwachte Variabel deaktiviert ist.
-Wenn die Einstellung 'Quittiere Meldung' ausgewählt wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf über 0 geändert wurde. 
-Wenn die Einstellung 'Quittiere Meldung, verschwindet, wenn die Störung behoben wurde' ausgewählt wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf über 0 geändert wurde und die überwachte Variable deaktiviert wurde. 
+Wenn 'Automatisches Ausblenden', aber nicht 'Bestätigung' aktiviert wurde, wird ein Link sichtbar, sobald die überwachte Variable aktiv ist. Dieser verschwindet sobald die überwachte Variabel deaktiviert ist.
+Wenn 'Bestätigung' und 'Automatisches Ausblenden' aktiviert wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf 1 bzw. 'In Bearbeitung' geändert wurde und die überwachte Variable inaktiv ist.
+Wenn 'Bestätigung' aber nicht 'Automatisches Ausblenden' aktiviert wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf über 2 bzw. 'Alles in Ordnung' geändert wurde. 
 
 ### Inhaltsverzeichnis
 
@@ -16,7 +16,7 @@ Wenn die Einstellung 'Quittiere Meldung, verschwindet, wenn die Störung behoben
 ### 1. Funktionsumfang
 
 * Anzeige von aktiven Variablen
-* Möglichkeit diese je nach Einstellung zu quittieren
+* Möglichkeit diese je nach Auswahl zu quittieren
 
 ### 2. Voraussetzungen
 
@@ -35,10 +35,12 @@ Wenn die Einstellung 'Quittiere Meldung, verschwindet, wenn die Störung behoben
 
 __Konfigurationsseite__:
 
-Name                   | Beschreibung
----------------------- | ---------------------------------
-Variable               | Variable, welche überwacht werden sollen.
-Umgang mit Nachrichten | Auswahl wie mit den Variablen umgegangen werden soll, wenn diese aktiv sind.
+Name                     | Beschreibung
+------------------------ | ---------------------------------
+Variable                 | Variable, welche überwacht werden sollen.
+Bestätigung              | Checkbox, damit die Meldung bestätigt oder nicht bestätigt werden soll.
+Automatisches Ausblenden | Checkbox, damit die Melcung bei deaktivierten Zustand wieder automatisch ausgeblendet wird 
+Umgang mit Nachrichten   | Auswahl wie mit den Variablen umgegangen werden soll, wenn diese aktiv sind.
 
 ### 5. Statusvariablen und Profile
 
@@ -56,7 +58,8 @@ Variablennamen - Status | Integer | Variable, welche erstellt wird, wenn 'Quitti
 
 Bezeichnung        | Beschreibung
 ------------------ | -----------------
-STA.Confirm        | Profil für erstellte Variablen
+STA.Confirm        | Profil für erstellte Variablen, mit 3 Stufen
+STA.ConfirmHide    | Profil für erstellte Variablen, mit 2 Stufen
 
 ### 6. WebFront
 Über das WebFront werden die erstellten Variablen angezeigt und können verändert werden, wenn diese quittiert werden müssen.
