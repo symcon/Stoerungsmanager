@@ -39,54 +39,36 @@ class Stoerungsanzeige extends IPSModule
     {
         //Never delete this line!
         parent::ApplyChanges();
+        $variableList = json_decode($this->ReadPropertyString('VariableList'), true);
 
         //Creating array containing variable IDs in List
         $variableIDs = [];
-        $variableList = json_decode($this->ReadPropertyString('VariableList'), true);
-        foreach ($variableList as $line) {
-            $variableIDs[] = $line['VariableID'];
-        }
 
         //Creating links and variable for all variable IDs in VariableList
         foreach ($variableList as $line) {
-            $variableID = $line['VariableID'];
+            //for later use - spare an extra foreach
+            $variableIDs[] = $line['VariableID'];
 
-            //One of the Checkboxes must be selected
+            $variableID = $line['VariableID'];
+            //One of the Checkboxes 'confirm' or 'hide' must be selected
             if (!$line['Confirmation'] && !$line['Hide']) {
                 $this->SetStatus(200);
                 return;
             } else {
                 $this->SetStatus(102);
             }
-
             $this->RegisterMessage($variableID, VM_UPDATE);
             $this->RegisterReference($variableID);
 
-            //If an option is change,  delete unused  or change it
-            if (!$line['Confirmation'] && $line['Hide'] && @$this->GetIDForIdent($variableID . 'Status')) {
-                //Unregister Variable if exist
-                $this->UnregisterMessage($this->GetIDForIdent($variableID . 'Status'), VM_UPDATE);
-                $this->UnregisterVariable($variableID . 'Status');
-            } elseif ($line['Confirmation']) {
-                //Delete Link if exist
-                if (@$this->GetIDForIdent('Link' . $variableID)) {
-                    $linkID = $this->GetIDForIdent('Link' . $variableID);
-                    $this->UnregisterReference(IPS_GetLink($linkID)['TargetID']);
-                    $this->UnregisterReference($linkID);
-                    IPS_DeleteLink($this->GetIDForIdent('Link' . $variableID));
-                }
-
-                //Change Profile if necessary
-                $profile = $this->GetVariableProfile($this->GetIDForIdent($variableID . 'Status'));
-                if ($line['Hide'] && $profile != 'STA.ConfirmHide') {
-                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', 'STA.ConfirmHide');
-                } else {
-                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', 'STA.Confirm');
-                }
-            }
-
-            //Create links or variable if necessary
+            //Maintain variables and links
+            //Confirm=false hide=true
             if (!$line['Confirmation'] && $line['Hide']) {
+                //Unregister Variable if exist
+                if (@$this->GetIDForIdent($variableID . 'Status')) {
+                    $this->UnregisterMessage($this->GetIDForIdent($variableID . 'Status'), VM_UPDATE);
+                    $this->UnregisterVariable($variableID . 'Status');
+                }
+                //Create Link
                 if (!@$this->GetIDForIdent('Link' . $variableID)) {
                     //Create links for variables
                     $linkID = IPS_CreateLink();
@@ -97,24 +79,37 @@ class Stoerungsanzeige extends IPSModule
                     //Setting initial visibility
                     IPS_SetHidden($linkID, (GetValue($variableID) == $this->GetSwitchValue($variableID)));
                 }
-            } elseif (GetValue($variableID) != $this->GetSwitchValue($variableID) && $line['Confirmation']) {
-
-                //Get profile name
-                if ($line['Hide']) {
-                    $profile = 'STA.ConfirmHide';
-                } else {
-                    $profile = 'STA.Confirm';
+            //confirm=true
+            } else {
+                //Delete Link if exist
+                if (@$this->GetIDForIdent('Link' . $variableID)) {
+                    $linkID = $this->GetIDForIdent('Link' . $variableID);
+                    $this->UnregisterReference(IPS_GetLink($linkID)['TargetID']);
+                    $this->UnregisterReference($linkID);
+                    IPS_DeleteLink($this->GetIDForIdent('Link' . $variableID));
                 }
-
                 //Create Variable
-                $statusVariableID = $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', $profile);
+                $statusVariableID = $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status');
+                //Set custom name if available
+                if ($line['Customname'] != "") {
+                    IPS_SetName($statusVariableID, $line['Customname']);
+                }
                 IPS_SetParent($statusVariableID, $this->InstanceID);
                 $this->EnableAction($variableID . 'Status');
                 $this->RegisterMessage($statusVariableID, VM_UPDATE);
-
                 // Set initial value
                 $this->SetValue($variableID . 'Status', 0);
+
+                //Set right Profile of existent variable
+                $profile = $this->GetVariableProfile($this->GetIDForIdent($variableID . 'Status'));
+                if ($line['Hide'] && $profile != 'STA.ConfirmHide') {
+                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID), 'STA.ConfirmHide');
+                } else {
+                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID), 'STA.Confirm');
+                }
             }
+
+
         }
 
         //Deleting unlisted links

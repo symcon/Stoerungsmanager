@@ -4,12 +4,13 @@
 			"Variables": "Variablen",
 			"Variable": "Variable",
 			"Confirmation": "Bestätigung",
-			"Automatic hide": "Automatische Ausblendung",
+			"Auto. hide": "Auto. Ausblendung",
 			"Notification (optional)": "Benachrichtigung (optional)",
+			"Custom Name": "Benutzerdefinierter Name",
 			"Need for Action": "Aktion erforderlich",
 			"Work in progress": "In Bearbeitung",
 			"All right": "Alles in Ordnung",
-			"Undefine, one of the checkboxes must be select": "Nicht definiert, eine der Checkboxen muss ausgewählt sein"
+			"Undefine, one of the checkboxes must be selected": "Nicht definiert, eine der Checkboxen muss ausgewählt sein"
 		}
 	}
 }
