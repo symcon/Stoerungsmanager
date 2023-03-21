@@ -50,7 +50,7 @@
           "caption": "Custom Name",
           "width": "auto",
           "add": "",
-          "name": "Customname",
+          "name": "CustomName",
           "edit": {
             "type": "ValidationTextBox"
           }
