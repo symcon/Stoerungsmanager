@@ -248,22 +248,18 @@ class Stoerungsanzeige extends IPSModule
     private function RegisterNoFailureVariable() : void
     {
         if (!$this->HasVisibleChildren()) {
-            $this->RegisterVariableString("NoFailure", "Es liegen keine Störungen vor.");
+            $this->RegisterVariableString("NoFailure", $this->Translate("No failures present"));
         }
     }
 
     private function HasVisibleChildren()
     {
-        if (IPS_HasChildren($this->InstanceID)) {
-            $childrenIDs = IPS_GetChildrenIDs($this->InstanceID);
-            foreach ($childrenIDs as $childID) {
-                if (!IPS_GetObject($childID)['ObjectIsHidden']) {
-                    return true;
-                }
+        $childrenIDs = IPS_GetChildrenIDs($this->InstanceID);
+        foreach ($childrenIDs as $childID) {
+            if (!IPS_GetObject($childID)['ObjectIsHidden']) {
+                return true;
             }
-            return false;
-        } else {
-            return false;
         }
+        return false;
     }
 }
