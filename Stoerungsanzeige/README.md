@@ -3,6 +3,8 @@ Das Modul dient dazu aktive Variablen im Webfront anzuzeigen und je nach Einstel
 Wenn 'Automatisches Ausblenden', aber nicht 'Bestätigung' aktiviert wurde, wird ein Link sichtbar, sobald die überwachte Variable aktiv ist. Dieser verschwindet sobald die überwachte Variabel deaktiviert ist.
 Wenn 'Bestätigung' und 'Automatisches Ausblenden' aktiviert wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf 1 bzw. 'In Bearbeitung' geändert wurde und die überwachte Variable inaktiv ist.
 Wenn 'Bestätigung' aber nicht 'Automatisches Ausblenden' aktiviert wurde, wird eine Variable erstellt, sobald die überwachte Variable aktiv ist. Diese verschwindet sobald bei der erstellten Variable der Wert auf über 2 bzw. 'Alles in Ordnung' geändert wurde. 
+Ist keine Störung vorhanden, wird der Status "Es liegen keine Störungen vor" angezeigt.
+Wird eine Variable erstellt wird diese primär nach dem "benutzerdefinierten Namen" benannt. Ansonsten wird der Eigenename der Variable genutzt.
 
 ### Inhaltsverzeichnis
 
@@ -16,6 +18,7 @@ Wenn 'Bestätigung' aber nicht 'Automatisches Ausblenden' aktiviert wurde, wird 
 ### 1. Funktionsumfang
 
 * Anzeige von aktiven Variablen
+* Benutzerdefinierte Namen für Statusvariablen
 * Möglichkeit diese je nach Auswahl zu quittieren
 
 ### 2. Voraussetzungen
@@ -39,9 +42,9 @@ Name                     | Beschreibung
 ------------------------ | ---------------------------------
 Variable                 | Variable, welche überwacht werden sollen.
 Bestätigung              | Checkbox, damit die Meldung bestätigt oder nicht bestätigt werden soll.
-Automatisches Ausblenden | Checkbox, damit die Meldung bei deaktivierten Zustand wieder automatisch ausgeblendet wird 
+Automatisches Ausblenden | Checkbox, damit die Meldung bei deaktivierten Zustand wieder automatisch ausgeblendet wird.
 Umgang mit Nachrichten   | Auswahl wie mit den Variablen umgegangen werden soll, wenn diese aktiv sind.
-Benutzerdefinierter Name | Name, welcher die Statusvariable bekommt 
+Benutzerdefinierter Name | Name, welchen die Statusvariable bekommt. Wenn leer, wird der Eigenname der auswählten Variable genommen.
 
 ### 5. Statusvariablen und Profile
 
