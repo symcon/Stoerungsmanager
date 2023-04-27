@@ -39,8 +39,9 @@ Name                     | Beschreibung
 ------------------------ | ---------------------------------
 Variable                 | Variable, welche überwacht werden sollen.
 Bestätigung              | Checkbox, damit die Meldung bestätigt oder nicht bestätigt werden soll.
-Automatisches Ausblenden | Checkbox, damit die Melcung bei deaktivierten Zustand wieder automatisch ausgeblendet wird 
+Automatisches Ausblenden | Checkbox, damit die Meldung bei deaktivierten Zustand wieder automatisch ausgeblendet wird 
 Umgang mit Nachrichten   | Auswahl wie mit den Variablen umgegangen werden soll, wenn diese aktiv sind.
+Benutzerdefinierter Name | Name, welcher die Statusvariable bekommt 
 
 ### 5. Statusvariablen und Profile
 
