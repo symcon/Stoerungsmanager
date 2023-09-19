@@ -5,5 +5,5 @@
 [![Run Tests](https://github.com/symcon/Stoerungsanzeige/workflows/Run%20Tests/badge.svg)](https://github.com/symcon/Stoerungsanzeige/actions)
 Folgende Module beinhaltet das Soerungsanzeige Repository:
 
-- __Störungsanzeige__ ([Dokumentation](Stoerungsanzeige))  
+- __Störungsanzeige__ ([Dokumentation](https://www.symcon.de/de/service/dokumentation/modulreferenz/stoerungsanzeige))  
 	Zeigt an, wenn ausgewählte Variablen aktiv sind und kann diese je nach Einstellung quittieren.
