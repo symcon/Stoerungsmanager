@@ -1,8 +1,8 @@
 {
     "id": "{F49AB6E6-C766-5E74-8079-3BAEB5CB4670}",
-    "name": "Stoerungsanzeige",
+    "name": "Stoerungsmanager",
     "author": "symcon",
-    "url": "https://github.com/symcon/Stoerungsanzeige",
+    "url": "https://github.com/symcon/Stoerungsmanager",
     "compatibility": {
         "version": "6.0"
     },

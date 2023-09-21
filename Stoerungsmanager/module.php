@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class Stoerungsanzeige extends IPSModule
+class Stoerungsmanager extends IPSModule
 {
     public function Create()
     {
