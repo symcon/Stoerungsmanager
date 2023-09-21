@@ -39,35 +39,46 @@ class Stoerungsanzeige extends IPSModule
     {
         //Never delete this line!
         parent::ApplyChanges();
+        $variableList = json_decode($this->ReadPropertyString('VariableList'), true);
 
         //Creating array containing variable IDs in List
         $variableIDs = [];
-        $variableList = json_decode($this->ReadPropertyString('VariableList'), true);
-        foreach ($variableList as $line) {
-            $variableIDs[] = $line['VariableID'];
-        }
 
         //Creating links and variable for all variable IDs in VariableList
         foreach ($variableList as $line) {
-            $variableID = $line['VariableID'];
+            //for later use - spare an extra foreach
+            $variableIDs[] = $line['VariableID'];
 
-            //One of the Checkboxes must be selected
+            $variableID = $line['VariableID'];
+            //One of the Checkboxes 'confirm' or 'hide' must be selected
             if (!$line['Confirmation'] && !$line['Hide']) {
                 $this->SetStatus(200);
                 return;
             } else {
                 $this->SetStatus(102);
             }
-
             $this->RegisterMessage($variableID, VM_UPDATE);
             $this->RegisterReference($variableID);
 
-            //If an option is change,  delete unused  or change it
-            if (!$line['Confirmation'] && $line['Hide'] && @$this->GetIDForIdent($variableID . 'Status')) {
+            if (!$line['Confirmation']) {//Create links for non "Confirmation" mode
                 //Unregister Variable if exist
-                $this->UnregisterMessage($this->GetIDForIdent($variableID . 'Status'), VM_UPDATE);
-                $this->UnregisterVariable($variableID . 'Status');
-            } elseif ($line['Confirmation']) {
+                if (@$this->GetIDForIdent($variableID . 'Status')) {
+                    $this->UnregisterMessage($this->GetIDForIdent($variableID . 'Status'), VM_UPDATE);
+                    $this->UnregisterVariable($variableID . 'Status');
+                }
+                //Create Link if necessary
+                if (!@$this->GetIDForIdent('Link' . $variableID)) {
+                    //Create links for variables
+                    $linkID = IPS_CreateLink();
+                    IPS_SetParent($linkID, $this->InstanceID);
+                    IPS_SetLinkTargetID($linkID, $variableID);
+                    IPS_SetIdent($linkID, 'Link' . $variableID);
+                    IPS_SetName($linkID, $line['CustomName'] ? $line['CustomName'] : IPS_GetName($variableID));
+
+                    //Setting initial visibility
+                    IPS_SetHidden($linkID, (GetValue($variableID) == $this->GetSwitchValue($variableID)));
+                }
+            } else {//Create variables for "Confirmation" mode
                 //Delete Link if exist
                 if (@$this->GetIDForIdent('Link' . $variableID)) {
                     $linkID = $this->GetIDForIdent('Link' . $variableID);
@@ -75,45 +86,22 @@ class Stoerungsanzeige extends IPSModule
                     $this->UnregisterReference($linkID);
                     IPS_DeleteLink($this->GetIDForIdent('Link' . $variableID));
                 }
-
-                //Change Profile if necessary
-                $profile = $this->GetVariableProfile($this->GetIDForIdent($variableID . 'Status'));
-                if ($line['Hide'] && $profile != 'STA.ConfirmHide') {
-                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', 'STA.ConfirmHide');
-                } else {
-                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', 'STA.Confirm');
+                //Create Variable if necessary
+                if (GetValue($variableID) != $this->GetSwitchValue($variableID)) {
+                    $statusVariableID = $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID));
+                    $this->EnableAction($variableID . 'Status');
+                    $this->RegisterMessage($statusVariableID, VM_UPDATE);
+                    // Set initial value
+                    $this->SetValue($variableID . 'Status', 0);
                 }
-            }
-
-            //Create links or variable if necessary
-            if (!$line['Confirmation'] && $line['Hide']) {
-                if (!@$this->GetIDForIdent('Link' . $variableID)) {
-                    //Create links for variables
-                    $linkID = IPS_CreateLink();
-                    IPS_SetParent($linkID, $this->InstanceID);
-                    IPS_SetLinkTargetID($linkID, $variableID);
-                    IPS_SetIdent($linkID, 'Link' . $variableID);
-
-                    //Setting initial visibility
-                    IPS_SetHidden($linkID, (GetValue($variableID) == $this->GetSwitchValue($variableID)));
+                //Maintain profile and custom name
+                $id = @$this->GetIDForIdent($variableID . 'Status');
+                if (IPS_VariableExists($id)) {
+                    //Set custom name if available else get object name
+                    IPS_SetName($id, $line['CustomName'] ? $line['CustomName'] : IPS_GetName($variableID));
+                    // Update default profile depending on hide value
+                    $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID), $line['Hide'] ? 'STA.ConfirmHide' : 'STA.Confirm');
                 }
-            } elseif (GetValue($variableID) != $this->GetSwitchValue($variableID) && $line['Confirmation']) {
-
-                //Get profile name
-                if ($line['Hide']) {
-                    $profile = 'STA.ConfirmHide';
-                } else {
-                    $profile = 'STA.Confirm';
-                }
-
-                //Create Variable
-                $statusVariableID = $this->RegisterVariableInteger($variableID . 'Status', IPS_GetName($variableID) . '-Status', $profile);
-                IPS_SetParent($statusVariableID, $this->InstanceID);
-                $this->EnableAction($variableID . 'Status');
-                $this->RegisterMessage($statusVariableID, VM_UPDATE);
-
-                // Set initial value
-                $this->SetValue($variableID . 'Status', 0);
             }
         }
 
@@ -133,6 +121,8 @@ class Stoerungsanzeige extends IPSModule
                 }
             }
         }
+
+        $this->MaintainVariable('NoFailure', $this->Translate('No failures present'), VARIABLETYPE_STRING, '', 0, !$this->HasVisibleChildren());
     }
 
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
@@ -146,32 +136,31 @@ class Stoerungsanzeige extends IPSModule
                 if ($Data[0] == $this->GetSwitchValue($SenderID)) {
                     //Variable is off
                     if ($line['Hide'] && !$line['Confirmation']) {
-                        IPS_SetHidden($this->GetIDForIdent('Link' . $SenderID), true);
+                        IPS_SetHidden(@$this->GetIDForIdent('Link' . $SenderID), true);
                         if ($line['Notification'] != 0) {
                             BN_Reset($line['Notification']);
                         }
-                    } elseif ($line['Confirmation'] && (
-                        ($line['Hide'] && $this->GetValue($SenderID . 'Status') == 1) ||
-                        (!$line['Hide'] && $this->GetValue($SenderID . 'Status') == 2))) {
+                    } elseif (($line['Hide'] && @$this->GetValue($SenderID . 'Status') == 1) || (!$line['Hide'] && @$this->GetValue($SenderID . 'Status') == 2)) {
                         $this->UnregisterVariable($SenderID . 'Status');
                         if ($line['Notification'] != 0) {
                             BN_Reset($line['Notification']);
-                            //Get ID of Active Variable of notification
                         }
                     }
+                    //Create NoFailure message if neccessary
+                    $this->MaintainVariable('NoFailure', $this->Translate('No failures present'), VARIABLETYPE_STRING, '', 0, !$this->HasVisibleChildren());
                 } else {
+                    $this->UnregisterVariable('NoFailure');
                     //Variable is on
                     if ($line['Hide'] && !$line['Confirmation']) {
                         IPS_SetHidden($this->GetIDForIdent('Link' . $SenderID), false);
-                    } elseif (IPS_VariableExists($SenderID . 'Status')) {
-                        $statusVariableID = $this->RegisterVariableInteger($SenderID . 'Status', IPS_GetName($SenderID) . '-Status', $line['Hide'] ? 'STA.ConfirmHide' : 'STA.Confirm');
+                    } else {
+                        $statusVariableID = $this->RegisterVariableInteger(
+                            $SenderID . 'Status',
+                            $line['CustomName'] ? $line['CustomName'] : IPS_GetName($SenderID),
+                            $line['Hide'] ? 'STA.ConfirmHide' : 'STA.Confirm'
+                        );
                         $this->EnableAction($SenderID . 'Status');
                         $this->RegisterMessage($statusVariableID, VM_UPDATE);
-                        $this->SetValue($SenderID . 'Status', 0);
-                        if ($line['Notification'] != 0) {
-                            BN_Reset($line['Notification']);
-                        }
-                    } else {
                         $this->SetValue($SenderID . 'Status', 0);
                         if ($line['Notification'] != 0) {
                             BN_Reset($line['Notification']);
@@ -198,6 +187,8 @@ class Stoerungsanzeige extends IPSModule
             if ((GetValue($listenId) == $this->GetSwitchValue($listenId) && $line['Hide'] && $value == 1) ||
                 (!$line['Hide'] && $value == 2)) {
                 $this->UnregisterVariable($id);
+                //Create NoFailure message
+                $this->MaintainVariable('NoFailure', $this->Translate('No failures present'), VARIABLETYPE_STRING, '', 0, !$this->HasVisibleChildren());
             } else {
                 $this->SetValue($id, $value);
             }
@@ -218,7 +209,7 @@ class Stoerungsanzeige extends IPSModule
             //Integer
             case 1:
 
-            //Float
+                //Float
             case 2:
                 if (IPS_VariableProfileExists($this->GetVariableProfile($VariableID))) {
                     if ($this->IsProfileInverted($VariableID)) {
@@ -251,5 +242,16 @@ class Stoerungsanzeige extends IPSModule
     private function IsProfileInverted($VariableID)
     {
         return substr($this->GetVariableProfile($VariableID), -strlen('.Reversed')) === '.Reversed';
+    }
+
+    private function HasVisibleChildren()
+    {
+        $childrenIDs = IPS_GetChildrenIDs($this->InstanceID);
+        foreach ($childrenIDs as $childID) {
+            if (!IPS_GetObject($childID)['ObjectIsHidden']) {
+                return true;
+            }
+        }
+        return false;
     }
 }
