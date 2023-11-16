@@ -1,17 +1,17 @@
 {
-	"translations": {
-		"de": {
-			"Variables": "Variablen",
-			"Variable": "Variable",
-			"Confirmation": "Bestätigung",
-			"Automatic hide": "Automatische Ausblendung",
-			"Notification (optional)": "Benachrichtigung (optional)",
-			"Custom Name": "Benutzerdefinierter Name",
-			"Need for Action": "Aktion erforderlich",
-			"Work in progress": "In Bearbeitung",
-			"All right": "Alles in Ordnung",
-			"No failures present": "Es liegen keine Störungen vor",
-			"Undefine, one of the checkboxes must be selected": "Nicht definiert, eine der Checkboxen muss ausgewählt sein"
-		}
-	}
+    "translations": {
+        "de": {
+            "Variables": "Variablen",
+            "Variable": "Variable",
+            "Confirmation": "Bestätigung",
+            "Automatic hide": "Automatische Ausblendung",
+            "Notification (optional)": "Benachrichtigung (optional)",
+            "Custom Name": "Benutzerdefinierter Name",
+            "Need for Action": "Aktion erforderlich",
+            "Work in progress": "In Bearbeitung",
+            "All right": "Alles in Ordnung",
+            "No failures present": "Es liegen keine Störungen vor",
+            "Undefine, one of the checkboxes must be selected": "Nicht definiert, eine der Checkboxen muss ausgewählt sein"
+        }
+    }
 }

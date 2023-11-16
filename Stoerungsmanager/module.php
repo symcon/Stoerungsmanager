@@ -206,7 +206,7 @@ class Stoerungsmanager extends IPSModule
             //Boolean
             case 0:
                 return $this->IsProfileInverted($VariableID);
-            //Integer
+                //Integer
             case 1:
 
                 //Float
@@ -221,9 +221,10 @@ class Stoerungsmanager extends IPSModule
                     return 0;
                 }
 
-            //Integer
-            // no break
-            // FIXME: No break. Please add proper comment if intentional
+                //Integer
+                // no break
+                // FIXME: No break. Please add proper comment if intentional
+                // No break. Add additional comment above this line if intentional
             case 3:
                 return '';
 

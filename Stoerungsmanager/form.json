@@ -1,68 +1,68 @@
 {
-  "elements": [
-    {
-      "type": "List",
-      "name": "VariableList",
-      "caption": "Variables",
-      "add": true,
-      "delete": true,
-      "columns": [
+    "elements": [
         {
-          "caption": "Variable",
-          "name": "VariableID",
-          "width": "300px",
-          "add": 0,
-          "edit": {
-            "type": "SelectVariable"
-          }
-        },
-        {
-          "caption": "Confirmation",
-          "width": "80px",
-          "add": true,
-          "name": "Confirmation",
-          "edit": {
-            "type": "CheckBox"
-          }
-        },
-        {
-          "caption": "Automatic hide",
-          "width": "120px",
-          "add": true,
-          "name": "Hide",
-          "edit": {
-            "type": "CheckBox"
-          }
-        },
-        {
-          "caption": "Notification (optional)",
-          "width": "120px",
-          "add": 0,
-          "name": "Notification",
-          "edit": {
-            "type": "SelectInstance",
-            "validModules": [
-              "{57677DB8-4C2A-4673-A267-B083A0755CDE}"
+            "type": "List",
+            "name": "VariableList",
+            "caption": "Variables",
+            "add": true,
+            "delete": true,
+            "columns": [
+                {
+                    "caption": "Variable",
+                    "name": "VariableID",
+                    "width": "300px",
+                    "add": 0,
+                    "edit": {
+                        "type": "SelectVariable"
+                    }
+                },
+                {
+                    "caption": "Confirmation",
+                    "width": "80px",
+                    "add": true,
+                    "name": "Confirmation",
+                    "edit": {
+                        "type": "CheckBox"
+                    }
+                },
+                {
+                    "caption": "Automatic hide",
+                    "width": "120px",
+                    "add": true,
+                    "name": "Hide",
+                    "edit": {
+                        "type": "CheckBox"
+                    }
+                },
+                {
+                    "caption": "Notification (optional)",
+                    "width": "120px",
+                    "add": 0,
+                    "name": "Notification",
+                    "edit": {
+                        "type": "SelectInstance",
+                        "validModules": [
+                            "{57677DB8-4C2A-4673-A267-B083A0755CDE}"
+                        ]
+                    }
+                },
+                {
+                    "caption": "Custom Name",
+                    "width": "auto",
+                    "add": "",
+                    "name": "CustomName",
+                    "edit": {
+                        "type": "ValidationTextBox"
+                    }
+                }
             ]
-          }
-        },
-        {
-          "caption": "Custom Name",
-          "width": "auto",
-          "add": "",
-          "name": "CustomName",
-          "edit": {
-            "type": "ValidationTextBox"
-          }
         }
-      ]
-    }
-  ],
-  "status": [
-    {
-      "code": 200,
-      "icon": "error",
-      "caption": "Undefine, one of the checkboxes must be selected"
-    }
-  ]
+    ],
+    "status": [
+        {
+            "code": 200,
+            "icon": "error",
+            "caption": "Undefine, one of the checkboxes must be selected"
+        }
+    ]
 }
