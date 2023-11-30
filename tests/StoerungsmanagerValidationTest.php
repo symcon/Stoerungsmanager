@@ -8,8 +8,8 @@ class StoerungsmanagerValidationTest extends TestCaseSymconValidation
     {
         $this->validateLibrary(__DIR__ . '/..');
     }
-    public function testValidateStoerungsmanagerModule(): void
+    public function testValidateFaultManagerModule(): void
     {
-        $this->validateModule(__DIR__ . '/../Stoerungsmanager');
+        $this->validateModule(__DIR__ . '/../FaultManager');
     }
 }

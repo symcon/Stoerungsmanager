@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class Stoerungsmanager extends IPSModule
+class FaultManager extends IPSModule
 {
     public function Create()
     {
