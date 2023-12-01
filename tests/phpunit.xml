@@ -6,7 +6,7 @@
   </php>
   <source>
     <include>
-      <directory suffix=".php">../Stoerungsanzeige</directory>
+      <directory suffix=".php">../FaultManager</directory>
     </include>
   </source>
 </phpunit>
